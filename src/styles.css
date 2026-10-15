@@ -1,0 +1,117 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-bar: var(--bar);
+  --color-compare: var(--compare);
+  --color-swap: var(--swap);
+  --color-sorted: var(--sorted);
+  --color-visited: var(--visited);
+  --color-frontier: var(--frontier);
+  --color-path: var(--path);
+  --color-grid: var(--grid);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.16 0.015 240);
+  --foreground: oklch(0.94 0.01 220);
+  --card: oklch(0.2 0.018 240);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.22 0.02 240);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.85 0.16 175);
+  --primary-foreground: oklch(0.18 0.03 200);
+  --secondary: oklch(0.26 0.02 240);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.24 0.018 240);
+  --muted-foreground: oklch(0.68 0.02 230);
+  --accent: oklch(0.3 0.03 220);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.68 0.2 22);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.32 0.02 240);
+  --input: oklch(0.3 0.02 240);
+  --ring: var(--primary);
+
+  --bar: oklch(0.55 0.05 235);
+  --compare: oklch(0.83 0.16 80);
+  --swap: oklch(0.7 0.2 15);
+  --sorted: oklch(0.8 0.15 165);
+  --visited: oklch(0.6 0.09 250);
+  --frontier: oklch(0.83 0.16 80);
+  --path: oklch(0.85 0.16 175);
+  --grid: oklch(0.28 0.02 240 / 0.5);
+
+  --glow-primary: 0 0 24px color-mix(in oklab, var(--primary) 35%, transparent);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
+
+@layer components {
+  .panel { @apply rounded-lg border bg-card/90 backdrop-blur-sm; }
+  .label { @apply font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground; }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-md border bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground transition-all hover:border-primary/60 hover:text-primary disabled:pointer-events-none disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-ring;
+  }
+  .btn-primary {
+    @apply border-primary bg-primary text-primary-foreground hover:text-primary-foreground hover:brightness-110;
+    box-shadow: var(--glow-primary);
+  }
+  .chip {
+    @apply rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground;
+  }
+  .chip-active { @apply border-primary bg-primary/10 text-primary; }
+  .field {
+    @apply w-full rounded-md border bg-input/40 px-3 py-2 font-mono text-sm text-foreground outline-none focus:border-primary;
+  }
+  .bar-rect { transition: height 0.25s ease, y 0.25s ease, fill 0.2s ease; }
+  .bar-group { transition: transform 0.3s cubic-bezier(.5,0,.2,1); }
+  .node-circle { transition: fill 0.25s ease, stroke 0.25s ease, r 0.25s ease; }
+  .edge-line { transition: stroke 0.25s ease, stroke-width 0.25s ease; }
+  .pulse { animation: pulse-ring 1s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+}
+
+@keyframes pulse-ring {
+  0% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.7); }
+}
